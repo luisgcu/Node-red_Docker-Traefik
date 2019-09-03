@@ -1,6 +1,6 @@
 ### Traefik as an HTTP reverse proxy for Node-red Docker Containers.
 
-![]((https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/traefikreverse proxy.jpg)
+![](https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/traefikreverseproxy.jpg)
 
 ### Introduction.
 
