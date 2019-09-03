@@ -67,7 +67,7 @@ The `docker-compose.yml` file will provide us with a simple, consistent and more
 version: '3'
 # Create 3 node-red docker containers  ready to operate behind traefik Reverse proxy
 services:
-   nodered1:    
+   nodered1:    #Nodered Docker container 1
     image: nodered/node-red-docker:latest
     restart: always
     user: root
@@ -76,7 +76,7 @@ services:
     networks:
       - web
     volumes:
-      - /home/luisgcu/noder_data/node1/:/data   
+      - /home/luisgcu/noder_data/node1/:/data  # Do nor forget to set  NR volumes   
     ports:
       - "1880:1880"
     labels:
@@ -85,7 +85,7 @@ services:
       - "traefik.docker.network=web"
       - "traefik.frontend.rule=Host:node1.yourdomain.net" 
 
-   nodered2:   
+   nodered2:   #Nodered Docker container 2
     image: nodered/node-red-docker:latest
     restart: always
     user: root
@@ -94,7 +94,7 @@ services:
     networks:
       - web
     volumes:
-      - /home/luisgcu/noder_data/node2/:/data
+      - /home/luisgcu/noder_data/node2/:/data # Do nor forget to set  NR volumes
     ports:
       - "1881:1880"
     labels:
@@ -103,7 +103,7 @@ services:
       - "traefik.docker.network=web"
       - "traefik.frontend.rule=Host:node2.yourdomain.net"
       
-   nodered3:   
+   nodered3:  #Nodered Docker container 3 
     image: nodered/node-red-docker:latest
     restart: always
     user: root
@@ -112,7 +112,7 @@ services:
     networks:
       - web
     volumes:
-      - /home/luisgcu/noder_data/node3/:/data
+      - /home/luisgcu/noder_data/node3/:/data  # Do nor forget to set  NR volumes
     ports:
       - "1882:1880"
     labels:
@@ -121,7 +121,7 @@ services:
       - "traefik.docker.network=web"
       - "traefik.frontend.rule=Host:node3.yourdomain.net"  
       
-   traefix:       
+   traefix:  # Traefix docker compose start here     
     image: traefik
     command: --api --docker
     restart: always    
@@ -193,4 +193,8 @@ onHostRule = true
 ```
 $ sudo docker-compose up -d
 ```
+
+![](https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/DockerComposeUp.jpg)
+
+*Containers list running*
 
