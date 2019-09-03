@@ -38,13 +38,159 @@ In this example, we're going to use a single network called `web` where all cont
 
 ### Steps to follow.
 
+*On the Docker host, run the following command:*
 
+```
+docker network create web
+```
 
+*Now, let's create a directory on the server where we will configure the rest of Traefik:*
 
+```
+mkdir -p /opt/traefik
+```
 
+*Within this directory, we're going to create 3 empty files:*
 
+```
+touch /opt/traefik/docker-compose.yml
+touch /opt/traefik/acme.json 
+chmod 600 /opt/traefik/acme.json
+touch /opt/traefik/traefik.toml
+```
 
+The `docker-compose.yml` file will provide us with a simple, consistent and more importantly, a deterministic way to create Traefik and the Node-red containers.
 
+**The contents of the file is as follows:**
 
+```
+version: '3'
+# Create 3 node-red docker containers  ready to operate behind traefik Reverse proxy
+services:
+   nodered1:    
+    image: nodered/node-red-docker:latest
+    restart: always
+    user: root
+    environment:
+      - TZ= America/New_York
+    networks:
+      - web
+    volumes:
+      - /home/luisgcu/noder_data/node1/:/data   
+    ports:
+      - "1880:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nodered1"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:node1.yourdomain.net" 
+
+   nodered2:   
+    image: nodered/node-red-docker:latest
+    restart: always
+    user: root
+    environment:
+      - TZ= America/New_York
+    networks:
+      - web
+    volumes:
+      - /home/luisgcu/noder_data/node2/:/data
+    ports:
+      - "1881:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nodered2"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:node2.yourdomain.net"
+      
+   nodered3:   
+    image: nodered/node-red-docker:latest
+    restart: always
+    user: root
+    environment:
+      - TZ= America/New_York
+    networks:
+      - web
+    volumes:
+      - /home/luisgcu/noder_data/node3/:/data
+    ports:
+      - "1882:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nodered2"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:node3.yourdomain.net"  
+      
+   traefix:       
+    image: traefik
+    command: --api --docker
+    restart: always    
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /opt/traefik/traefik.toml:/traefik.toml
+      - /opt/traefik/acme.json:/acme.json      
+    networks:
+      - web
+    labels:
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.passHostHeader=true"  
  
+networks:
+  web:
+    external: true
+
+```
+
+ As you can see, we're mounting the `traefik.toml` file as well as the (empty) `acme.json` file in the container.
+Also, we're mounting the `/var/run/docker.sock` Docker socket in the container as well, so Traefik can listen to Docker events and reconfigure its own internal configuration when containers are created (or shut down).
+Also, we're making sure the container is automatically restarted by the Docker engine in case of problems (or: if the server is rebooted). We're publishing the default HTTP ports `80` and `443` on the host, and making sure the container is placed within the `web` network we've created earlier on.
+
+Let's take a look at a simple `traefik.toml` configuration as well before we'll create the Traefik container:
+
+```
+debug = true
+logLevel = "ERROR"
+
+defaultEntryPoints = ["http", "https"]
+
+[api]
+# Port for the status/dashboard page
+dashboard = true
+
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+
+    [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "yourdomain.net"
+watch = true
+exposedByDefault = true
+
+[acme]
+email = "user@emailprovider.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+    [acme.httpChallenge]
+    entryPoint = "http"
+```
+
+*Now is time to run the docker compose*
+
+```
+$ sudo docker-compose up -d
+```
 
