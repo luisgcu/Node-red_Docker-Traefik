@@ -1,88 +1,42 @@
-# mbox-hardware JTAG Version
-ModbusBox device hardware design.
+### Traefik as an HTTP reverse proxy for Node-red Docker Containers.
+
+![]((https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/traefikreverse proxy.jpg)
 
 ### Introduction.
 
-**ModbusBox**    allows the integration of Modbus RTU networks to a WiFi connection. It is capable to  read data registers  from modbus slaves  then send data periodically  to cloud services using the very popular MQTT protocol. Data is serialized  using  Json format , the information can be processed and displayed in dashboards  by many open source IOT platforms like Node-red, Influxdb & Grafana,  Ubidots educational and  its pay platform which is very powerfully and easy to use. 
+Node-RED is flow-based programing for the internet of things Node red would allow you to   program and  wiring together hardware devices, APIs and online services in new and interesting ways.
 
-**ModbusBox**  has been tested and optimized to be connected to  Variable frequency drives that uses  modbus RTU as base protocol .
+It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single-click.
 
-### Hardware features.
+### Why Traefik ?.
 
-**Processor :** ESP32-WROOM-32 
+For  testing purposes I need several Node-red instances running in small home server (IntelNuck)  accessible to  different customers, each Nodered dashboard's must  have its subdomain  with https enabled.
 
-**DC Input :** 7~ 26v ( step down dc buck regulator).
+Traefik is very easy to setup for this very basic setup, obviously after 7 hours of  research    and getting help from friends and forums. 
 
-**Current consumption:** <100ma when DC input =20 ~27v
+### Let's Encrypt & Docker
 
-**Hardware interfaces.**
+In this use case, we want to use Traefik as a *layer-7* load balancer with SSL termination for a set of micro-services used to run a web application.
 
-- 1x RS485 port (RJ45), non insolated.
-- 1x programing connection (tx0,rx0,En,GPIO0).
-- jTAG interface.
-- 1x SPI port.
-- 1xI2c port.
-- 3x micro buttons for ESP programing mode and device setup.
+We also want to automatically *discover any services* on the Docker host and let Traefik reconfigure itself automatically when containers get created (or shut down) so HTTP traffic can be routed accordingly.
 
-**Led indication.**
+In addition, we want to use Let's Encrypt to automatically generate and renew SSL certificates per hostname.
 
-- 1x power led.
-- 1 x MQTT activity ( msg send/received).
-- 1x  Neopixel  RGB  led for device status indication.
-- 1x Modbus TX led.
-- 1x Modbus RX led.
+### Setting Up
 
-**WiFi Specs**.
+In order for this to work, you'll need a server with a public IP address, with Docker and docker-compose installed on it.
 
-IEEE 802.11 b/g/n
+In this example, we're using the fictitious domain *yourdomain.net*.
 
-Freq Band: 2.4 ~ 2.462 GHZ.
+In real-life, you'll want to use your own domain and have the DNS configured accordingly so the hostname records you'll want to use point to the aforementioned public IP address.
 
-Integrated Antenna.
+## Networking
 
-**Unassembled top layer  PCB photo**.
+Docker containers can only communicate with each other over TCP when they share at least one network. This makes sense from a topological point of view in the context of networking, since Docker under the hood creates IPTable rules so containers can't reach other containers *unless you'd want to*.
 
-![TOP](https://github.com/luisgcu/mboxhardware-jtag/blob/master/images/tpcb1.jpg)
+In this example, we're going to use a single network called `web` where all containers that are handling HTTP traffic (including Traefik) will reside in.
 
-
-
-**Unassembled bottom  layer  PCB photo.**
-
-
-
-![Bottom](https://github.com/luisgcu/mboxhardware-jtag/blob/master/images/bpcb1.jpg)
-
-
-
-### Electronic Schematic.
-
-[PDF ](https://github.com/luisgcu/mboxhardware-jtag/blob/master/docs/mbox-jtag.pdf)
-
-![ASSEMBLED PCB]()
-
-
-
-
-
-To be continued.. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+### Steps to follow.
 
 
 
