@@ -198,3 +198,7 @@ $ sudo docker-compose up -d
 
 *Containers list running*
 
+![](https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/ContainersList.jpg)
+
+*Traefik Dashboard*
+
