@@ -218,7 +218,7 @@ $ sudo docker-compose up -d
 
 [Running a Docker container as a non-root user](https://medium.com/redbubble/running-a-docker-container-as-a-non-root-user-7d2e00f8ee15)
 
-[Dcoker Compose file](https://docs.docker.com/compose/compose-file/)
+[Docker Compose file](https://docs.docker.com/compose/compose-file/)
 
 [Traefik Examples](https://github.com/KamranAzeem/LearningDocker/tree/master/examples/traefik)
 
@@ -232,5 +232,5 @@ $ sudo docker-compose up -d
 
 [Local HTTPS Dev Proxy Using Lets Encrypt and Cloudflare](https://blog.rylander.io/2018/07/21/local-https-dev-proxy-using-lets-encrypt-and-cloudflare/)
 
-[Docker-compose.yml and Traefik.toml](https://github.com/luisgcu/Node-redDocker-Traefik/tree/master/nodered-traefik)
+[Docker-compose.yml and Traefik.toml template created  for this example](https://github.com/luisgcu/Node-redDocker-Traefik/tree/master/nodered-traefik)
 
