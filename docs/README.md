@@ -30,6 +30,8 @@ In this example, we're using the fictitious domain *yourdomain.net*.
 
 In real-life, you'll want to use your own domain and have the DNS configured accordingly so the hostname records you'll want to use point to the aforementioned public IP address.
 
+***if you want to try this at home Do no forget to create a port forwarding rule in your router  of the ports  80 and 443  to the IP where you  pretend to host the Docker containers***
+
 ## Networking
 
 Docker containers can only communicate with each other over TCP when they share at least one network. This makes sense from a topological point of view in the context of networking, since Docker under the hood creates IPTable rules so containers can't reach other containers *unless you'd want to*.
@@ -203,4 +205,32 @@ $ sudo docker-compose up -d
 *Traefik Dashboard*
 
 ![](https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/traefikdashboard.jpg)
+
+*Node-red*
+
+![hh](https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/NRwebs.jpg)
+
+### References used for learning .
+
+[Docker and Lets encrypt guide](https://docs.traefik.io/user-guide/docker-and-lets-encrypt/)
+
+[Configuration examples](https://docs.traefik.io/user-guide/examples/)
+
+[Running a Docker container as a non-root user](https://medium.com/redbubble/running-a-docker-container-as-a-non-root-user-7d2e00f8ee15)
+
+[Dcoker Compose file](https://docs.docker.com/compose/compose-file/)
+
+[Traefik Examples](https://github.com/KamranAzeem/LearningDocker/tree/master/examples/traefik)
+
+[Traefik as a Reverse Proxy for Docker Containers on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-use-traefik-as-a-reverse-proxy-for-docker-containers-on-ubuntu-18-04)
+
+[Server Setup with traefik and docker-compose](https://blog.kilian.io/server-setup/)
+
+[Traefik Forum](https://community.containo.us/t/custom-header-for-node-red/1426)
+
+[Traefik As a Load Balancer / HTTP Reverse Proxy For Micro-Services](https://www.devtech101.com/2017/07/13/using-traefik-load-balancer-http-reverse-proxy-micro-services/)
+
+[Local HTTPS Dev Proxy Using Lets Encrypt and Cloudflare](https://blog.rylander.io/2018/07/21/local-https-dev-proxy-using-lets-encrypt-and-cloudflare/)
+
+[Docker-compose.yml and Traefik.toml](https://github.com/luisgcu/Node-redDocker-Traefik/tree/master/nodered-traefik)
 
