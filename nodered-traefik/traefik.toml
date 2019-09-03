@@ -1,0 +1,36 @@
+debug = true
+logLevel = "ERROR"
+
+defaultEntryPoints = ["http", "https"]
+
+[api]
+# Port for the status/dashboard page
+dashboard = true
+
+[entryPoints]
+    [entryPoints.http]
+    address = ":80"
+        [entryPoints.http.redirect]
+        entryPoint = "https"
+
+    [entryPoints.https]
+    address = ":443"
+    [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "yourdomain.net"
+watch = true
+exposedByDefault = true
+
+[acme]
+email = "user@emailprovider.com"
+storage = "acme.json"
+entryPoint = "https"
+onHostRule = true
+    [acme.httpChallenge]
+    entryPoint = "http"
+
+

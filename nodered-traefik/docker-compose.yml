@@ -1,0 +1,80 @@
+version: '3'
+# Create 3 node-red docker containers  ready to operate behind traefik Reverse proxy
+services:
+   nodered1:    
+    image: nodered/node-red-docker:latest
+    restart: always
+    user: root
+    environment:
+      - TZ= America/New_York
+    networks:
+      - web
+    volumes:
+      - /home/luisgcu/noder_data/node1/:/data   
+    ports:
+      - "1880:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nodered1"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:node1.yourdomain.net" 
+
+   nodered2:   
+    image: nodered/node-red-docker:latest
+    restart: always
+    user: root
+    environment:
+      - TZ= America/New_York
+    networks:
+      - web
+    volumes:
+      - /home/luisgcu/noder_data/node2/:/data
+    ports:
+      - "1881:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nodered2"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:node2.yourdomain.net"
+      
+   nodered3:   
+    image: nodered/node-red-docker:latest
+    restart: always
+    user: root
+    environment:
+      - TZ= America/New_York
+    networks:
+      - web
+    volumes:
+      - /home/luisgcu/noder_data/node3/:/data
+    ports:
+      - "1882:1880"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.backend=nodered2"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:node3.yourdomain.net"  
+      
+   traefix:       
+    image: traefik
+    command: --api --docker
+    restart: always    
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /opt/traefik/traefik.toml:/traefik.toml
+      - /opt/traefik/acme.json:/acme.json      
+    networks:
+      - web
+    labels:
+      - "traefik.frontend.headers.STSPreload=true"
+      - "traefik.frontend.passHostHeader=true"  
+ 
+networks:
+  web:
+    external: true
+
+
