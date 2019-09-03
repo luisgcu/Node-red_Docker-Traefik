@@ -202,3 +202,5 @@ $ sudo docker-compose up -d
 
 *Traefik Dashboard*
 
+![](https://github.com/luisgcu/Node-redDocker-Traefik/blob/master/docs/traefikdashboard.jpg)
+
