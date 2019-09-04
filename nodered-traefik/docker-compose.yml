@@ -51,7 +51,7 @@ services:
       - "1882:1880"
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=nodered2"
+      - "traefik.backend=nodered3"
       - "traefik.docker.network=web"
       - "traefik.frontend.rule=Host:node3.yourdomain.net"  
       

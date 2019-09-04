@@ -119,7 +119,7 @@ services:
       - "1882:1880"
     labels:
       - "traefik.enable=true"
-      - "traefik.backend=nodered2"
+      - "traefik.backend=nodered3"        
       - "traefik.docker.network=web"
       - "traefik.frontend.rule=Host:node3.yourdomain.net"  
       
@@ -177,12 +177,12 @@ dashboard = true
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
-domain = "yourdomain.net"
+domain = "yourdomain.net"         # Your domain here
 watch = true
 exposedByDefault = true
 
 [acme]
-email = "user@emailprovider.com"
+email = "user@emailprovider.com"  # Your email here
 storage = "acme.json"
 entryPoint = "https"
 onHostRule = true
@@ -233,4 +233,6 @@ $ sudo docker-compose up -d
 [Local HTTPS Dev Proxy Using Lets Encrypt and Cloudflare](https://blog.rylander.io/2018/07/21/local-https-dev-proxy-using-lets-encrypt-and-cloudflare/)
 
 [Docker-compose.yml and Traefik.toml template created  for this example](https://github.com/luisgcu/Node-redDocker-Traefik/tree/master/nodered-traefik)
+
+Special Thanks to [@ludnadez](https://github.com/ldez) for his support and patience.
 
