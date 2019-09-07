@@ -232,6 +232,8 @@ $ sudo docker-compose up -d
 
 [Local HTTPS Dev Proxy Using Lets Encrypt and Cloudflare](https://blog.rylander.io/2018/07/21/local-https-dev-proxy-using-lets-encrypt-and-cloudflare/)
 
+[Docker Traefik proxy inverso --En español](https://blog.ichasco.com/docker-traefik-proxy-inverso/)
+
 [Docker-compose.yml and Traefik.toml template created  for this example](https://github.com/luisgcu/Node-redDocker-Traefik/tree/master/nodered-traefik)
 
 Special Thanks to [@ludnadez](https://github.com/ldez) for his support and patience.
